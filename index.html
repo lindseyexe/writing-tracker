@@ -63,45 +63,6 @@
             color: var(--text-color);
         }
 
-        /* Controls Row */
-        .controls {
-            margin-top: 30px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Buttons & Inputs */
-        button, select {
-            background: white;
-            border: 1px solid var(--bubble-empty);
-            padding: 8px 16px;
-            cursor: pointer;
-            color: var(--text-color);
-            border-radius: 4px;
-            font-size: 0.8rem;
-            transition: all 0.2s;
-            font-family: inherit;
-        }
-
-        button:hover, select:hover {
-            background: var(--bubble-filled);
-            color: white;
-            border-color: var(--bubble-filled);
-        }
-
-        input[type="color"] {
-            border: 1px solid var(--bubble-empty);
-            width: 40px;
-            height: 35px;
-            padding: 0;
-            background: white;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
         /* Calendar Grid */
         .calendar-container {
             display: grid;
@@ -148,47 +109,193 @@
             filter: brightness(0.95); 
         }
 
-        /* Today Highlight */
         .bubble.today {
             border-color: var(--bubble-filled);
             border-width: 2px;
             box-shadow: 0 0 6px var(--bubble-filled);
         }
 
+        /* --- Log Section --- */
+        .log-section {
+            max-width: 800px;
+            width: 100%;
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .toggle-log-btn {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 20px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .toggle-log-btn:hover {
+            color: var(--bubble-filled);
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        .log-container {
+            width: 100%;
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            animation: fadeIn 0.2s ease-in-out;
+        }
+
+        .log-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 8px;
+            max-height: 260px;
+            overflow-y: auto;
+            padding: 4px;
+        }
+
+        .log-card {
+            background: white;
+            border: 1px solid var(--bubble-empty);
+            border-radius: 6px;
+            padding: 8px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+
+        .log-card:hover {
+            border-color: var(--bubble-filled);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .log-card.highlight {
+            border-color: var(--bubble-filled);
+            background: #fffdfd;
+        }
+
+        .log-card .date {
+            font-weight: 500;
+            color: #666;
+        }
+
+        .log-card .count {
+            font-weight: bold;
+            color: var(--bubble-filled);
+        }
+
+        .empty-log {
+            font-size: 0.75rem;
+            color: #aaa;
+            text-align: center;
+            font-style: italic;
+            padding: 10px;
+        }
+
+        /* Controls Row */
+        .controls {
+            margin-top: 30px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button, select {
+            background: white;
+            border: 1px solid var(--bubble-empty);
+            padding: 8px 16px;
+            cursor: pointer;
+            color: var(--text-color);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        button:hover, select:hover {
+            background: var(--bubble-filled);
+            color: white;
+            border-color: var(--bubble-filled);
+        }
+
+        input[type="color"] {
+            border: 1px solid var(--bubble-empty);
+            width: 40px;
+            height: 35px;
+            padding: 0;
+            background: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @media (max-width: 600px) {
             .calendar-container { gap: 5px; }
             .bubble { width: 16px; height: 16px; }
             .month-label { font-size: 0.6rem; }
+            .log-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
         }
 
-        /* Print Styles */
         @media print {
-            .controls { display: none !important; }
+            .controls, .toggle-log-btn { display: none !important; }
             body { 
                 zoom: 70%; 
                 -webkit-print-color-adjust: exact; 
                 print-color-adjust: exact; 
                 background-color: white; 
             }
-            .calendar-container {
+            .calendar-container, .log-section {
                 max-width: 100%;
                 width: 100%;
                 overflow: visible;
             }
+            .log-grid { max-height: none; overflow: visible; }
             h1 { margin-bottom: 6px !important; border: none; }
-            .bubble.today {
-                box-shadow: none;
-                border-width: 2px;
-            }
+            .bubble.today { box-shadow: none; border-width: 2px; }
         }
     </style>
 </head>
 <body>
 
     <h1 id="appTitle" contenteditable="true" spellcheck="false">Every Day</h1>
-    <div class="stats-summary" id="statsSummary">Total Words: <span id="totalWordCount">0</span> &nbsp;|&nbsp; Days Logged: <span id="daysLoggedCount">0</span></div>
+    <div class="stats-summary" id="statsSummary">
+        Total: <span id="totalWordCount">0</span> words &nbsp;|&nbsp; 
+        Days Logged: <span id="daysLoggedCount">0</span> &nbsp;|&nbsp; 
+        Avg: <span id="avgWordCount">0</span> / day
+    </div>
 
     <div class="calendar-container" id="calendar"></div>
+
+    <!-- Collapsible Log Section -->
+    <div class="log-section">
+        <button class="toggle-log-btn" id="toggleLogBtn" onclick="toggleDailyLog()">
+            <span>▾ Daily Log Breakdown</span>
+        </button>
+        <div class="log-container" id="logContainer">
+            <div class="log-grid" id="logGrid"></div>
+        </div>
+    </div>
 
     <div class="controls">
         <select id="yearSelect" title="Change Year"></select>
@@ -207,12 +314,17 @@
         const yearSelect = document.getElementById('yearSelect');
         const totalWordCountEl = document.getElementById('totalWordCount');
         const daysLoggedCountEl = document.getElementById('daysLoggedCount');
+        const avgWordCountEl = document.getElementById('avgWordCount');
+        const logGridEl = document.getElementById('logGrid');
+        const logContainerEl = document.getElementById('logContainer');
+        const toggleLogBtn = document.getElementById('toggleLogBtn');
         
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         const months = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
         
         let currentYear = new Date().getFullYear(); 
         let savedData = {}; 
+        let isLogOpen = true;
 
         function init() {
             const legacyData = localStorage.getItem('goalCalendarData');
@@ -247,24 +359,69 @@
             currentYear = parseInt(year);
             savedData = JSON.parse(localStorage.getItem(`goalCalendarData_${currentYear}`)) || {};
             renderCalendar();
-            updateStats();
+            updateStatsAndLog();
         }
 
-        function updateStats() {
+        function toggleDailyLog() {
+            isLogOpen = !isLogOpen;
+            logContainerEl.style.display = isLogOpen ? 'flex' : 'none';
+            toggleLogBtn.innerHTML = `<span>${isLogOpen ? '▾' : '▸'} Daily Log Breakdown</span>`;
+        }
+
+        function updateStatsAndLog() {
             let totalWords = 0;
             let daysLogged = 0;
+            let maxWords = 0;
+            const entries = [];
 
-            Object.values(savedData).forEach(val => {
+            Object.entries(savedData).forEach(([key, val]) => {
                 if (val) {
                     daysLogged++;
-                    if (typeof val === 'number') {
-                        totalWords += val;
+                    const [monthIdx, day] = key.split('-').map(Number);
+                    const count = typeof val === 'number' ? val : 0;
+                    if (count > 0) {
+                        totalWords += count;
+                        if (count > maxWords) maxWords = count;
                     }
+                    entries.push({ key, monthIdx, day, val, count });
                 }
             });
 
+            // Sort chronologically
+            entries.sort((a, b) => a.monthIdx === b.monthIdx ? a.day - b.day : a.monthIdx - b.monthIdx);
+
             totalWordCountEl.textContent = totalWords.toLocaleString();
             daysLoggedCountEl.textContent = daysLogged;
+            avgWordCountEl.textContent = daysLogged > 0 ? Math.round(totalWords / daysLogged).toLocaleString() : 0;
+
+            // Render log grid
+            logGridEl.innerHTML = '';
+            if (entries.length === 0) {
+                logGridEl.innerHTML = '<div class="empty-log">No entries logged for this year yet. Click any day on the calendar to begin.</div>';
+                return;
+            }
+
+            entries.forEach(entry => {
+                const card = document.createElement('div');
+                const isMax = entry.count > 0 && entry.count === maxWords && entries.length > 1;
+                card.className = `log-card ${isMax ? 'highlight' : ''}`;
+                
+                const label = typeof entry.val === 'number' ? `${entry.val.toLocaleString()} w` : '✓ Done';
+                const dateStr = `${monthNames[entry.monthIdx]} ${entry.day}`;
+                
+                card.innerHTML = `
+                    <span class="date">${dateStr}</span>
+                    <span class="count">${label} ${isMax ? '★' : ''}</span>
+                `;
+                
+                card.title = isMax ? `${dateStr} — Highest word count (${entry.count.toLocaleString()})` : `Click to edit ${dateStr}`;
+                card.addEventListener('click', () => {
+                    const bubble = document.querySelector(`[data-id="${entry.key}"]`);
+                    handleBubbleClick(bubble, entry.key, dateStr);
+                });
+
+                logGridEl.appendChild(card);
+            });
         }
 
         function renderCalendar() {
@@ -293,6 +450,8 @@
                     const bubble = document.createElement('div');
                     bubble.className = 'bubble';
                     const bubbleId = `${index}-${day}`;
+                    bubble.setAttribute('data-id', bubbleId);
+                    
                     const entryValue = savedData[bubbleId];
                     const dateFormatted = `${monthNames[index]} ${day}`;
 
@@ -320,40 +479,43 @@
         }
 
         function handleBubbleClick(bubble, bubbleId, dateFormatted) {
-            const isCurrentlyFilled = bubble.classList.contains('filled');
+            const isCurrentlyFilled = bubble ? bubble.classList.contains('filled') : !!savedData[bubbleId];
             const currentValue = savedData[bubbleId];
             const currentWords = typeof currentValue === 'number' ? currentValue : '';
 
-            // Prompt user for word count
             const promptMsg = isCurrentlyFilled 
-                ? `Edit word count for ${dateFormatted} (enter 0 or leave empty to clear):`
+                ? `Edit word count for ${dateFormatted} (enter 0 or leave blank to clear):`
                 : `Enter word count for ${dateFormatted} (or click OK with 0 to just mark complete):`;
 
             const input = prompt(promptMsg, currentWords);
-            if (input === null) return; // User cancelled
+            if (input === null) return;
 
             const parsed = parseInt(input.replace(/,/g, '').trim(), 10);
 
             if (isNaN(parsed) || parsed <= 0) {
                 if (input.trim() === '0') {
-                    // Mark complete without a specific word count
-                    bubble.classList.add('filled');
-                    bubble.title = `${dateFormatted} — Done`;
+                    if (bubble) {
+                        bubble.classList.add('filled');
+                        bubble.title = `${dateFormatted} — Done`;
+                    }
                     savedData[bubbleId] = true;
                 } else {
-                    // Cleared/emptied
-                    bubble.classList.remove('filled');
-                    bubble.title = dateFormatted;
+                    if (bubble) {
+                        bubble.classList.remove('filled');
+                        bubble.title = dateFormatted;
+                    }
                     delete savedData[bubbleId];
                 }
             } else {
-                bubble.classList.add('filled');
-                bubble.title = `${dateFormatted} — ${parsed.toLocaleString()} words`;
+                if (bubble) {
+                    bubble.classList.add('filled');
+                    bubble.title = `${dateFormatted} — ${parsed.toLocaleString()} words`;
+                }
                 savedData[bubbleId] = parsed;
             }
 
             localStorage.setItem(`goalCalendarData_${currentYear}`, JSON.stringify(savedData));
-            updateStats();
+            updateStatsAndLog();
         }
 
         // --- Event Listeners ---
@@ -377,7 +539,7 @@
                 localStorage.removeItem(`goalCalendarData_${currentYear}`);
                 savedData = {};
                 renderCalendar();
-                updateStats();
+                updateStatsAndLog();
             }
         }
 
