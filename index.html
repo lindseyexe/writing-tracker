@@ -313,7 +313,6 @@
         const yearSelect = document.getElementById('yearSelect');
         const totalWordCountEl = document.getElementById('totalWordCount');
         const daysLoggedCountEl = document.getElementById('daysLoggedCount');
-        const avgWordCountEl = document.getElementById('avgWordCount');
         const logGridEl = document.getElementById('logGrid');
         const logContainerEl = document.getElementById('logContainer');
         const toggleLogBtn = document.getElementById('toggleLogBtn');
@@ -391,7 +390,6 @@
 
             totalWordCountEl.textContent = totalWords.toLocaleString();
             daysLoggedCountEl.textContent = daysLogged;
-            avgWordCountEl.textContent = daysLogged > 0 ? Math.round(totalWords / daysLogged).toLocaleString() : 0;
 
             // Render log grid
             logGridEl.innerHTML = '';
